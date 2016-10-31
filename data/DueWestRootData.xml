@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-facade-xml type="seed">
+    <moqui.screen.SubscreensItem screenLocation="component://webroot/screen/webroot.xml" subscreenName="dw" menuInclude="N"
+                                 subscreenLocation="component://DueWest/screen/DueWestRoot.xml"/>
+
+    <!-- authz/permission for ALL users -->
+   <!-- <moqui.security.ArtifactGroup artifactGroupId="DUE_WEST_ROOT" description="Due West Root"/>
+    <moqui.security.ArtifactGroupMember artifactGroupId="DUE_WEST_ROOT" artifactName="component://DueWest/screen/DueWestRoot.xml" artifactTypeEnumId="AT_XML_SCREEN" inheritAuthz="Y"/>
+
+    <moqui.security.ArtifactAuthz artifactAuthzId="DUE_WEST_ALL" artifactGroupId="DUE_WEST_ROOT" userGroupId="ALL_USERS" authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>-->
+
+</entity-facade-xml>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
+        require-authentication="false">
+
+    <actions>
+        <entity-find entity-name="WorkEffort" list="publicHolidays">
+            <econdition field-name="workEffortTypeEnumId" value="PublicHoliday"/>
+            <select-field field-name="estimatedStartDate"/>
+            <select-field field-name="workEffortName"/>
+            <order-by field-name="estimatedStartDate"/>
+        </entity-find>
+        <set field="workingDays" from="DateUtilities.getWorkingDays(publicHolidays)"/>
+        <set field="rows" from="[1,2,3,4]"/>
+        <set field="cols" from="[1,2,3]"/>
+    </actions>
+
+    <widgets>
+       <!--<label text="publicHolidays : ${publicHolidays}"/>-->
+        <section-iterate name="row" list="rows" entry="rowCount">
+            <widgets>
+                <container-row>
+
+
+                    <!--<section-iterate name="col" list="rows" entry="rowCount"></section-iterate>-->
+
+                    <row-col md="2">
+                        <container-box>
+                            <box-header>
+
+                            </box-header>
+                            <box-body>
+
+                            </box-body>
+                        </container-box>
+                    </row-col>
+
+
+                </container-row>
+
+            </widgets>
+        </section-iterate>
+
+
+        <form-list name="PublicHoliday" list="publicHolidays">
+            <field name="estimatedStartDate">
+                <default-field>
+                    <display text-format="yyyy年M月d日"/>
+                </default-field>
+            </field>
+            <field name="workEffortName">
+                <default-field>
+                    <display/>
+                </default-field>
+            </field>
+        </form-list>
+        <section-iterate name="workingDays" list="workingDays" entry="workingDay">
+            <widgets>
+                <display text-format="yyyy年M月d日"/>
+            </widgets>
+        </section-iterate>
+
+
+
+    </widgets>
+</screen>
