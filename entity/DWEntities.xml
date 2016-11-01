@@ -1,0 +1,25 @@
+
+<entities xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/entity-definition-2.0.xsd">
+    <entity entity-name="LeaveRequest" package="mantle.humanres.employment" use="nontransactional">
+        <field name="partyId" type="id" is-pk="true"/>
+        <field name="fromDate" type="date" is-pk="true"/>
+        <field name="thruDate" type="date"/>
+        <field name="leaveTypeEnumId" type="id"/>
+        <field name="leaveReasonEnumId" type="id"/>
+        <field name="leaveApproved" type="text-indicator" enable-audit-log="true"/>
+        <field name="approverPartyId" type="id"/>
+        <field name="description" type="text-medium"/>
+
+        <relationship type="one" title="EmploymentLeaveType" related="moqui.basic.Enumeration">
+            <key-map field-name="leaveTypeEnumId"/>
+        </relationship>
+        <relationship type="one" title="EmploymentLeaveReason" related="moqui.basic.Enumeration">
+            <key-map field-name="leaveReasonEnumId"/>
+        </relationship>
+        <relationship type="one" title="Approver" related="mantle.party.Party">
+            <key-map field-name="approverPartyId"/>
+        </relationship>
+
+    </entity>
+</entities>
