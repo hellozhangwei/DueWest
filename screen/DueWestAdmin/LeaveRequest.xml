@@ -1,0 +1,8 @@
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
+        default-menu-title="请假记录" default-menu-index="1">
+
+    <widgets>
+        <label text="请假记录"/>
+    </widgets>
+</screen>

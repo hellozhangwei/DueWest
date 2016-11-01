@@ -1,0 +1,8 @@
+<screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
+        default-menu-title="公共假期" default-menu-index="2">
+
+    <widgets>
+        <label text="公共假期"/>
+    </widgets>
+</screen>
