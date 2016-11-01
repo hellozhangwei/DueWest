@@ -10,4 +10,22 @@
 
     <moqui.security.ArtifactAuthz artifactAuthzId="DUE_WEST_ALL" artifactGroupId="DUE_WEST_ROOT" userGroupId="ALL_USERS" authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>-->
 
+    <moqui.screen.SubscreensItem screenLocation="component://webroot/screen/webroot/apps.xml"
+                                 subscreenName="dwa" subscreenLocation="component://DueWest/screen/DueWestAdmin.xml"
+                                 menuTitle="DW Admin" menuIndex="9" menuInclude="Y"/>
+
+
+    <moqui.security.UserGroup userGroupId="DW_ADMIN" description="DW App Administrators"/>
+
+    <!-- KM App root screen -->
+    <moqui.security.ArtifactGroup artifactGroupId="DW_APP" description="DW app"/>
+
+    <moqui.security.ArtifactGroupMember artifactGroupId="DW_APP" artifactName="component://DueWest/screen/DueWestAdmin.xml"
+                                        artifactTypeEnumId="AT_XML_SCREEN" inheritAuthz="Y"/>
+
+    <moqui.security.ArtifactAuthz artifactAuthzId="DW_APP_ADMIN" userGroupId="DW_ADMIN" artifactGroupId="DW_APP"
+                                  authzTypeEnumId="AUTHZT_ALWAYS" authzActionEnumId="AUTHZA_ALL"/>
+
+    <moqui.security.UserGroupMember userGroupId="DW_ADMIN" userId="EX_JOHN_DOE" fromDate="1265184000000"/>
+
 </entity-facade-xml>
