@@ -1,5 +1,6 @@
 
 
+/*
 def leaveDays = [new Date().parse("yyyy-MM-dd", '2016-10-31')
              , new Date().parse("yyyy-MM-dd", '2016-11-01')
              , new Date().parse("yyyy-MM-dd", '2016-11-02')
@@ -9,33 +10,89 @@ def leaveDays = [new Date().parse("yyyy-MM-dd", '2016-10-31')
              , new Date().parse("yyyy-MM-dd", '2016-11-09')
              , new Date().parse("yyyy-MM-dd", '2016-11-11')
 ]
+*/
+context.workingDays = getWorkingDays()
 
+context.workingDays.each{workingDay->
 
+    println workingDay.format('yyyy-MM-dd')
+}
 
-findLeaveDaysInWorkingDays(leaveDays)
+findLeaveDays()
+println "========context.leaveDays=${context.leaveDays}==========="
 
+findLeaveDaysInWorkingDays(context.leaveDays)
+
+findLeaveDaysNeedToRefund()
+
+def findLeaveDaysNeedToRefund() {
+    def leaveDaysNeedToRefund = []
+    context.indexGroups.each {indexGroup->
+        println "=========indexGroup=====${indexGroup.size()}=====${indexGroup}================"
+        if(indexGroup.size()>=3) {
+
+            indexGroup.each{index->
+                leaveDaysNeedToRefund.add([leaveDate:context.workingDays[index]])
+            }
+        }
+
+    }
+
+    context.leaveDaysNeedToRefund = leaveDaysNeedToRefund
+}
+
+def findLeaveDays() {
+    EntityList leaveRequestList = ec.entity.find("mantle.humanres.employment.LeaveRequest").orderBy('fromDate').list()
+    context.leaveRequestList = leaveRequestList
+    def leaveDays = []
+    leaveRequestList.each { leave ->
+        GregorianCalendar cal = new GregorianCalendar()
+        GregorianCalendar calStart = new GregorianCalendar()
+        calStart.setTime(leave.fromDate.clearTime())
+        cal.setTime(leave.fromDate.clearTime())
+
+        GregorianCalendar calEnd = new GregorianCalendar()
+        calEnd.setTime(leave.thruDate.clearTime())
+
+        for (int i = calStart.get(Calendar.DAY_OF_YEAR); i <= calEnd.get(Calendar.DAY_OF_YEAR); i++) {
+            cal.set(Calendar.DAY_OF_YEAR, i)
+            println "=========cal.getTime()=${cal.getTime()}======="
+            def leaveDay = [:]
+            leaveDay.leaveDate = cal.getTime()
+            leaveDays.add(leaveDay)
+        }
+
+        println "======41===leaveDays=${leaveDays}======="
+
+        //remove holiday in leaveDays
+
+        leaveDays.removeIf{isHoliday(it.leaveDate)}
+        context.leaveDays = leaveDays
+
+    }
+}
 
 def findLeaveDaysInWorkingDays(leaveDays) {
-    def workingDays = getWorkingDays()
+    def workingDays = context.workingDays
 
-    def foundIndex = []
+    def foundIndices = []
 
     def nextFoundPosition = -1
     for (int i=0;i<leaveDays.size();i++) {
 
         for (int j = nextFoundPosition +1 ; j < workingDays.size(); j++) {
-            if (leaveDays[i].clearTime().getTime() == workingDays[j].clearTime().getTime()) {
+            if (leaveDays[i].leaveDate.clearTime().getTime() == workingDays[j].clearTime().getTime()) {
                 nextFoundPosition = j
-                foundIndex.add(nextFoundPosition)
-                println "======nextFoundPosition=${nextFoundPosition}==${workingDays[j]}============"
+                foundIndices.add(nextFoundPosition)
+                //println "======nextFoundPosition=${nextFoundPosition}==${workingDays[j]}============"
                 break
             }
         }
 
     }
 
-    println "=========foundIndex==${foundIndices}======="
-    breakFoundWorkingDays(foundIndex)
+    println "=========foundIndices==${foundIndices}======="
+    breakFoundWorkingDays(foundIndices)
 
 }
 
@@ -63,10 +120,16 @@ def breakFoundWorkingDays(foundIndices) {
     }
 
     temp.add(foundIndices.last())
-
-    indexGroups.each {indexGroup->
+    context.indexGroups = indexGroups
+   /* indexGroups.each {indexGroup->
         println "=========indexGroup=${indexGroup}================"
-    }
+        indexGroup.each{index->
+
+        }
+
+    }*/
+
+
 }
 
 
@@ -97,7 +160,7 @@ def getWorkingDays() {
 
     workingDays.removeIf {isHoliday(it) }
     addWeekendWorkingDays(workingDays)
-
+    workingDays = workingDays.toSorted()
     return workingDays
 }
 
@@ -107,7 +170,10 @@ def addWeekendWorkingDays(workingDays) {
     }
 
     EntityList weekendWorkingDays = ec.entity.find("mantle.work.effort.WorkEffort").selectField("estimatedStartDate").condition([workEffortTypeEnumId:'BusinessWeekend']).list()
+
     weekendWorkingDays.each { weekendWorkingDay->
+        println "weekendWorkingDay====================${weekendWorkingDay.estimatedStartDate.format('yyyy-MM-dd')}======="
+
         workingDays.addAll(new Date(weekendWorkingDay.estimatedStartDate.getTime()))
     }
 

@@ -6,21 +6,52 @@
         <service-call name="create#mantle.humanres.employment.LeaveRequest"/>
         <default-response url="."/>
     </transition>
+
     <transition name="deleteLeaveRequest">
         <service-call name="delete#mantle.humanres.employment.LeaveRequest"/>
         <default-response url="."/>
     </transition>
 
     <actions>
-        <entity-find entity-name="LeaveRequest" list="leaveList">
-            <search-form-inputs/>
-        </entity-find>
+        <!--<entity-find entity-name="LeaveRequest" list="leaveList">-->
+            <!--<search-form-inputs/>-->
+        <!--</entity-find>-->
+        <script location="component://DueWest/script/findLeaveDaysNeedToRefund.groovy"/>
+
+       <!-- <script>
+            def leaveDays = []
+            leaveList.each{leave->
+            GregorianCalendar cal =new GregorianCalendar()
+            GregorianCalendar calStart =new GregorianCalendar()
+            calStart.setTime(leave.fromDate.clearTime())
+            cal.setTime(leave.fromDate.clearTime())
+
+            GregorianCalendar calEnd =new GregorianCalendar()
+            calEnd.setTime(leave.thruDate.clearTime())
+
+            for(int i=calStart.get(Calendar.DAY_OF_YEAR);i&lt;=calEnd.get(Calendar.DAY_OF_YEAR);i++) {
+                cal.set(Calendar.DAY_OF_YEAR, i)
+            println "=========cal.getTime()=${cal.getTime()}======="
+                def leaveDay = [:]
+                leaveDay.leaveDate = cal.getTime()
+                leaveDays.add(leaveDay)
+            }
+
+            println "=========leaveDays=${leaveDays}======="
+
+            //remove holiday in leaveDays
+
+            context.leaveDays =leaveDays
+
+            }
+        </script>-->
     </actions>
 
     <widgets>
         <container-dialog id="CreateLeaveRequestContainer" button-text="新建请假" width="800">
             <form-single name="CreateLeaveRequestForm" transition="createLeaveRequest">
                 <auto-fields-entity entity-name="LeaveRequest" field-type="edit"/>
+
                 <field name="submit">
                     <default-field>
                         <submit text="保存"/>
@@ -28,54 +59,78 @@
                 </field>
             </form-single>
         </container-dialog>
-        <form-list name="EmploymentLeaveListForm" list="leaveList">
-           <field name="partyId">
-                <header-field>
-                    <text-line size="4"/>
-                </header-field>
-                <default-field title="学生编号">
-                    <display/>
-                </default-field>
-            </field>
-            <field name="fromDate">
-                <default-field title="开始日期">
-                    <display/>
-                </default-field>
-            </field>
-            <field name="thruDate">
-                <default-field title="结束日期">
-                    <display/>
-                </default-field>
-            </field>
-            <field name="leaveReasonEnumId">
-                <default-field title="请假原因">
-                    <display/>
-                </default-field>
-            </field>
-            <field name="leaveTypeEnumId">
-                <default-field title="请假类型">
-                    <display/>
-                </default-field>
-            </field>
-            <field name="leaveApproved">
-                <default-field title="批准">
-                    <display/>
-                </default-field>
-            </field>
-            <field name="approverPartyId">
-                <default-field title="批准人">
-                    <display/>
-                </default-field>
-            </field>
-            <field name="action">
-                <header-field title="查找">
-                    <submit/>
-                </header-field>
-                <default-field>
-                    <link url="deleteLeaveRequest" text="删除" confirmation="Are you sure" />
-                </default-field>
-            </field>
-        </form-list>
+        <container-row>
+            <row-col lg="5">
+                <form-list name="EmploymentLeaveListForm" list="leaveRequestList" skip-form="true">
+                    <field name="partyId">
+                        <header-field>
+                            <text-line size="4"/>
+                        </header-field>
+                        <default-field title="学生编号">
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="fromDate">
+                        <default-field title="开始日期">
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="thruDate">
+                        <default-field title="结束日期">
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="leaveReasonEnumId">
+                        <default-field title="请假原因">
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="leaveTypeEnumId">
+                        <default-field title="请假类型">
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="leaveApproved">
+                        <default-field title="批准">
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="approverPartyId">
+                        <default-field title="批准人">
+                            <display/>
+                        </default-field>
+                    </field>
+                    <field name="action">
+                        <header-field title="查找">
+                            <submit/>
+                        </header-field>
+                        <default-field>
+                            <link url="deleteLeaveRequest" text="删除" confirmation="Are you sure" />
+                        </default-field>
+                    </field>
+                </form-list>
+            </row-col>
+            <row-col lg="2">
+                <form-list name="LeaveDays" list="leaveDays" skip-form="true">
+                    <field name="leaveDate">
+                        <default-field>
+                            <display format="yyyy-MM-dd"/>
+                        </default-field>
+                    </field>
+                </form-list>
+            </row-col>
+
+            <row-col lg="2">
+                <form-list name="LeaveDaysNeedToRefund" list="leaveDaysNeedToRefund" skip-form="true">
+                    <field name="leaveDate">
+                        <default-field title="Leave Date Need to Refund">
+                            <display format="yyyy-MM-dd"/>
+                        </default-field>
+                    </field>
+                </form-list>
+            </row-col>
+        </container-row>
+
 
     </widgets>
 </screen>
