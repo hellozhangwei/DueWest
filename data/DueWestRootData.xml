@@ -28,4 +28,42 @@
 
     <moqui.security.UserGroupMember userGroupId="DW_ADMIN" userId="EX_JOHN_DOE" fromDate="1265184000000"/>
 
+    <moqui.duewest.PublicHoliday publicDate="2016-01-01T00:00:00+0008" publicId="PUBLIC_HOLIDAY_001" description="元旦"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-01-02T00:00:00+0008" publicId="PUBLIC_HOLIDAY_002" description="元旦"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-01-03T00:00:00+0008" publicId="PUBLIC_HOLIDAY_003" description="元旦"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-02-07T00:00:00+0008" publicId="PUBLIC_HOLIDAY_004" description="春节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-02-08T00:00:00+0008" publicId="PUBLIC_HOLIDAY_005" description="春节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-02-09T00:00:00+0008" publicId="PUBLIC_HOLIDAY_006" description="春节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-02-10T00:00:00+0008" publicId="PUBLIC_HOLIDAY_007" description="春节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-02-11T00:00:00+0008" publicId="PUBLIC_HOLIDAY_008" description="春节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-02-12T00:00:00+0008" publicId="PUBLIC_HOLIDAY_009" description="春节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-02-13T00:00:00+0008" publicId="PUBLIC_HOLIDAY_010" description="春节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-04-02T00:00:00+0008" publicId="PUBLIC_HOLIDAY_010" description="清明节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-04-03T00:00:00+0008" publicId="PUBLIC_HOLIDAY_011" description="清明节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-04-04T00:00:00+0008" publicId="PUBLIC_HOLIDAY_012" description="清明节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-04-30T00:00:00+0008" publicId="PUBLIC_HOLIDAY_013" description="劳动节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-05-01T00:00:00+0008" publicId="PUBLIC_HOLIDAY_014" description="劳动节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-05-02T00:00:00+0008" publicId="PUBLIC_HOLIDAY_015" description="劳动节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-06-09T00:00:00+0008" publicId="PUBLIC_HOLIDAY_016" description="端午节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-06-10T00:00:00+0008" publicId="PUBLIC_HOLIDAY_017" description="端午节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-06-11T00:00:00+0008" publicId="PUBLIC_HOLIDAY_018" description="端午节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-09-15T00:00:00+0008" publicId="PUBLIC_HOLIDAY_019" description="中秋节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-09-16T00:00:00+0008" publicId="PUBLIC_HOLIDAY_020" description="中秋节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-09-17T00:00:00+0008" publicId="PUBLIC_HOLIDAY_021" description="中秋节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-10-01T00:00:00+0008" publicId="PUBLIC_HOLIDAY_022" description="国庆节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-10-02T00:00:00+0008" publicId="PUBLIC_HOLIDAY_023" description="国庆节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-10-03T00:00:00+0008" publicId="PUBLIC_HOLIDAY_024" description="国庆节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-10-04T00:00:00+0008" publicId="PUBLIC_HOLIDAY_025" description="国庆节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-10-05T00:00:00+0008" publicId="PUBLIC_HOLIDAY_026" description="国庆节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-10-06T00:00:00+0008" publicId="PUBLIC_HOLIDAY_027" description="国庆节"/>
+    <moqui.duewest.PublicHoliday publicDate="2016-10-07T00:00:00+0008" publicId="PUBLIC_HOLIDAY_028" description="国庆节"/>
+
+    <moqui.duewest.BusinessHoliday businessDate="2016-02-06T00:00:00+0008" businessId="BUSINESS_WEEKEND_001" description="春节调休"/>
+    <moqui.duewest.BusinessHoliday businessDate="2016-02-14T00:00:00+0008" businessId="BUSINESS_WEEKEND_002" description="春节调休"/>
+    <moqui.duewest.BusinessHoliday businessDate="2016-05-02T00:00:00+0008" businessId="BUSINESS_WEEKEND_003" description="劳动节调休"/>
+    <moqui.duewest.BusinessHoliday businessDate="2016-06-12T00:00:00+0008" businessId="BUSINESS_WEEKEND_004" description="端午节调休"/>
+    <moqui.duewest.BusinessHoliday businessDate="2016-09-18T00:00:00+0008" businessId="BUSINESS_WEEKEND_005" description="中秋节调休"/>
+    <moqui.duewest.BusinessHoliday businessDate="2016-10-08T00:00:00+0008" businessId="BUSINESS_WEEKEND_006" description="国庆节调休"/>
+    <moqui.duewest.BusinessHoliday businessDate="2016-10-09T00:00:00+0008" businessId="BUSINESS_WEEKEND_007" description="国庆节调休"/>
+
 </entity-facade-xml>

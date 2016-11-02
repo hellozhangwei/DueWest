@@ -22,4 +22,18 @@
         </relationship>
 
     </entity>
+
+    <!-- public holiday-->
+    <entity entity-name="PublicHoliday" package="moqui.duewest">
+        <field name="publicId"  type="id" is-pk="true"/>
+        <field name="publicDate" type="date-time"/>
+        <field name="description" type="text-long"/>
+    </entity>
+
+    <!-- business holiday-->
+    <entity entity-name="BusinessHoliday" package="moqui.duewest">
+        <field name="businessId"  type="id" is-pk="true"/>
+        <field name="businessDate" type="date-time"/>
+        <field name="description" type="text-long"/>
+    </entity>
 </entities>

@@ -1,8 +1,128 @@
 <screen xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/xml-screen-2.0.xsd"
         default-menu-title="公共假期" default-menu-index="2">
+    <transition name="createPublicHoliday">
+        <service-call name="create#moqui.duewest.PublicHoliday"/>
+        <default-response url="."/>
+    </transition>
 
+    <transition name="deletePublicHoliday">
+        <service-call name="delete#moqui.duewest.PublicHoliday"/>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="updatePublicHoliday">
+        <service-call name="update#moqui.duewest.PublicHoliday" in-map="context"/>
+        <default-response url="."/>
+    </transition>
+
+
+    <transition name="createBusinessHoliday">
+        <service-call name="create#moqui.duewest.BusinessHoliday"/>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="deleteBusinessHoliday">
+        <service-call name="delete#moqui.duewest.BusinessHoliday"/>
+        <default-response url="."/>
+    </transition>
+
+    <transition name="updateBusinessHoliday">
+        <service-call name="update#moqui.duewest.BusinessHoliday" in-map="context"/>
+        <default-response url="."/>
+    </transition>
+
+
+    <actions>
+        <entity-find entity-name="PublicHoliday" list="publicHolidayList">
+            <order-by field-name="publicDate"/>
+            <!--<search-form-inputs/>-->
+        </entity-find>
+        <entity-find entity-name="BusinessHoliday" list="businessHolidayList">
+            <order-by field-name="businessDate"/>
+            <!--<search-form-inputs/>-->
+        </entity-find>
+    </actions>
     <widgets>
-        <label text="公共假期"/>
+        <!--<label text="公共假期"/>-->
+        <container-row>
+            <row-col lg="6">
+                <container-dialog id="CreatePublicHolidayDialog" button-text="Create Public Holiday">
+                    <form-single name="CreatePublicHoliday" transition="createPublicHoliday">
+                        <auto-fields-entity entity-name="moqui.duewest.PublicHoliday" field-type="edit"/>
+                        <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+                    </form-single>
+                </container-dialog>
+
+                <form-list name="ListPublicHoliday" list="publicHolidayList" skip-form="true">
+                    <field name="businessId">
+                        <header-field show-order-by="false" title="ID"/>
+                        <!--<default-field><link url="../EditPublicHoliday" text="${publicId}"/></default-field>-->
+                        <default-field>
+                            <container-dialog id="editPublicHolidayDialog" button-text="${publicId}">
+                                <form-single name="EditPublicHoliday" transition="updatePublicHoliday">
+                                    <field name="publicId"><default-field title="ID"><hidden/></default-field></field>
+                                    <field name="publicDate"><default-field title="日期"><date-time type="date"/></default-field></field>
+                                    <field name="description"><default-field title="描述"><text-area cols="60" rows="3"/> </default-field></field>
+
+                                    <field name="submitButton"><default-field title="Update"><submit/></default-field></field>
+                                </form-single>
+                            </container-dialog>
+                        </default-field>
+                    </field>
+                    <field name="publicDate">
+                        <header-field show-order-by="true" title="日期"/>
+                        <default-field><display format="yyyy-MM-dd"/></default-field>
+                    </field>
+                    <field name="description">
+                        <header-field show-order-by="false" title="描述"/>
+                        <default-field><display /></default-field>
+                    </field>
+                    <field name="findLink">
+                        <header-field title=" "/>
+                        <default-field><link url="deletePublicHoliday" text="Delete" parameter-map="[publicId:publicId]"/></default-field>
+                    </field>
+                </form-list>
+            </row-col>
+            <row-col lg="6">
+                <container-dialog id="CreateBusinessHolidayDialog" button-text="Create Business Holiday">
+                    <form-single name="CreateBusinessHoliday" transition="createBusinessHoliday">
+                        <auto-fields-entity entity-name="moqui.duewest.BusinessHoliday" field-type="edit"/>
+                        <field name="submitButton"><default-field title="Create"><submit/></default-field></field>
+                    </form-single>
+                </container-dialog>
+
+                <form-list name="ListBusinessHoliday" list="businessHolidayList" skip-form="true">
+                    <field name="publicId">
+                        <header-field show-order-by="false" title="ID"/>
+                        <!--<default-field><link url="../EditPublicHoliday" text="${publicId}"/></default-field>-->
+                        <default-field>
+                            <container-dialog id="editBusinessHolidayDialog" button-text="${businessId}">
+                                <form-single name="EditBusinessHoliday" transition="updateBusinessHoliday">
+                                    <field name="businessId"><default-field title="ID"><hidden/></default-field></field>
+                                    <field name="businessDate"><default-field title="日期"><date-time type="date"/></default-field></field>
+                                    <field name="description"><default-field title="描述"><text-area cols="60" rows="3"/> </default-field></field>
+
+                                    <field name="submitButton"><default-field title="Update"><submit/></default-field></field>
+                                </form-single>
+                            </container-dialog>
+                        </default-field>
+                    </field>
+                    <field name="businessDate">
+                        <header-field show-order-by="true" title="日期"/>
+                        <default-field><display format="yyyy-MM-dd"/></default-field>
+                    </field>
+                    <field name="description">
+                        <header-field show-order-by="false" title="描述"/>
+                        <default-field><display /></default-field>
+                    </field>
+                    <field name="findLink">
+                        <header-field title=" "/>
+                        <default-field><link url="deleteBusinessHoliday" text="Delete" parameter-map="[businessId:businessId]"/></default-field>
+                    </field>
+                </form-list>
+            </row-col>
+        </container-row>
+
     </widgets>
 </screen>
