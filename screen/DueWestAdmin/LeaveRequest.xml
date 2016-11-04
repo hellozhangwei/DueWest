@@ -63,9 +63,9 @@
             <row-col lg="5">
                 <form-list name="EmploymentLeaveListForm" list="leaveRequestList" skip-form="true">
                     <field name="partyId">
-                        <header-field>
-                            <text-line size="4"/>
-                        </header-field>
+                        <!--<header-field>-->
+                            <!--<text-line size="4"/>-->
+                        <!--</header-field>-->
                         <default-field title="学生编号">
                             <display/>
                         </default-field>
@@ -101,9 +101,9 @@
                         </default-field>
                     </field>
                     <field name="action">
-                        <header-field title="查找">
-                            <submit/>
-                        </header-field>
+                        <!--<header-field title="查找">-->
+                            <!--<submit/>-->
+                        <!--</header-field>-->
                         <default-field>
                             <link url="deleteLeaveRequest" text="删除" confirmation="Are you sure" />
                         </default-field>

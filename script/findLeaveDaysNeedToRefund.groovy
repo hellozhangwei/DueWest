@@ -66,13 +66,16 @@ def findLeaveDays() {
 
         //remove holiday in leaveDays
 
-        leaveDays.removeIf{isHoliday(it.leaveDate)}
+        leaveDays.removeIf{!isWorkingDay(it.leaveDate)}
         context.leaveDays = leaveDays
 
     }
 }
 
 def findLeaveDaysInWorkingDays(leaveDays) {
+    if(!leaveDays) {
+        return
+    }
     def workingDays = context.workingDays
 
     def foundIndices = []
@@ -157,8 +160,7 @@ def getWorkingDays() {
 
     }
 
-
-    workingDays.removeIf {isHoliday(it) }
+    workingDays.removeIf {isPublicHoliday(it) }
     addWeekendWorkingDays(workingDays)
     workingDays = workingDays.toSorted()
     return workingDays
@@ -169,23 +171,36 @@ def addWeekendWorkingDays(workingDays) {
         return
     }
 
-    EntityList weekendWorkingDays = ec.entity.find("mantle.work.effort.WorkEffort").selectField("estimatedStartDate").condition([workEffortTypeEnumId:'BusinessWeekend']).list()
+//    EntityList weekendWorkingDays = ec.entity.find("mantle.work.effort.WorkEffort").selectField("estimatedStartDate").condition([workEffortTypeEnumId:'BusinessWeekend']).list()
+    EntityList weekendWorkingDays = ec.entity.find("moqui.duewest.BusinessHoliday").selectField("businessDate").list()
 
     weekendWorkingDays.each { weekendWorkingDay->
-        println "weekendWorkingDay====================${weekendWorkingDay.estimatedStartDate.format('yyyy-MM-dd')}======="
+        println "weekendWorkingDay====================${weekendWorkingDay.businessDate.format('yyyy-MM-dd')}======="
 
-        workingDays.addAll(new Date(weekendWorkingDay.estimatedStartDate.getTime()))
+        workingDays.addAll(new Date(weekendWorkingDay.businessDate.getTime()))
     }
 
 }
 
-def isHoliday(Date date) {
+def isPublicHoliday(Date date) {
 
-    EntityList publicHolidays = ec.entity.find("mantle.work.effort.WorkEffort").selectField("estimatedStartDate").condition([workEffortTypeEnumId:'PublicHoliday']).list()
+    EntityList publicHolidays = ec.entity.find("moqui.duewest.PublicHoliday").selectField("publicDate").list()
 
     for (int i=0;i<publicHolidays.size();i++) {
 
-        if(publicHolidays[i].estimatedStartDate.clearTime().getTime() == date.clearTime().getTime()) {
+        if(publicHolidays[i].publicDate.clearTime().getTime() == date.clearTime().getTime()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+def isWorkingDay(Date date) {
+
+
+    for (int i=0;i<context.workingDays.size();i++) {
+
+        if(context.workingDays[i].clearTime().getTime() == date.clearTime().getTime()) {
             return true;
         }
     }
